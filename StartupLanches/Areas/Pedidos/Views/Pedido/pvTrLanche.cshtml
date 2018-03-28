@@ -1,0 +1,6 @@
+﻿@using StartupLanches.Model;
+@model LancheMdl
+<tr data-id="@Model.Id">
+    <td>@Model.Nome</td>
+    <td>@string.Join(',', Model.Ingredientes.Select(s => s.Nome).ToList())</td>
+</tr>
