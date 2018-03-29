@@ -18,8 +18,9 @@ namespace StartupLanches.Tests
         }
 
         [Fact]
-        public void TesteValorLanche()
+        public void TesteValorSemPromocao()
         {
+            //Teste para garantir que o preço
             var lanche = new LanchePedidoMdl();
             lanche.Ingredientes = new List<IngredienteLanchePedidoMdl>();
             lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 6, Nome = "Ingrediente 1", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Carne, Valor = 10 }, 2));
@@ -36,7 +37,7 @@ namespace StartupLanches.Tests
         }
 
         [Fact]
-        public void TestePromocaoMuitaCarneLanche()
+        public void TestePromocaoMuitaCarne()
         {
             var lanche = new LanchePedidoMdl();
             lanche.Ingredientes = new List<IngredienteLanchePedidoMdl>();
@@ -57,7 +58,7 @@ namespace StartupLanches.Tests
         }
 
         [Fact]
-        public void TestePromocaoMuitoQueijoLanche()
+        public void TestePromocaoMuitoQueijo()
         {
             var lanche = new LanchePedidoMdl();
             lanche.Ingredientes = new List<IngredienteLanchePedidoMdl>();
@@ -78,7 +79,7 @@ namespace StartupLanches.Tests
         }
 
         [Fact]
-        public void TestePromocaoLightLanche()
+        public void TestePromocaoLight()
         {
             var lanche = new LanchePedidoMdl();
             lanche.Ingredientes = new List<IngredienteLanchePedidoMdl>();
@@ -99,32 +100,53 @@ namespace StartupLanches.Tests
 
             Assert.True(lanche.Promocoes.First(x => x.TipoPromocao == Model.Enumeradores.EnumTipoPromocao.Light).Valor == lanche.Valor * 0.1M * -1, "O desconto deveria ser de 10%");
         }
-        
+
         [Fact]
-        public void TesteValorFinalLanche()
+        public void TesteValorComPromocao()
         {
             var lanche = new LanchePedidoMdl();
             lanche.Ingredientes = new List<IngredienteLanchePedidoMdl>();
 
-            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 2, Nome = "Bacon", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Carne, Valor = 3 }, 2));
-            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 3, Nome = "Hamburguer", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Carne, Valor = 5 }, 2));
-            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 1, Nome = "Alface", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Vegetal, Valor = 1 }, 2));
-            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 4, Nome = "Ovo", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Outros, Valor = 3 }, 2));
-            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 5, Nome = "Queijo", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Outros, Valor = 3 }, 2));
+            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 2, Nome = "Bacon", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Carne, Valor = 2 }, 2));
+            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 3, Nome = "Hamburguer", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Carne, Valor = 3 }, 2));
+            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 1, Nome = "Alface", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Vegetal, Valor = 0.4M }, 2));
+            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 4, Nome = "Ovo", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Outros, Valor = 0.8M }, 2));
+            lanche.Ingredientes.Add(new IngredienteLanchePedidoMdl(new IngredienteMdl() { Id = 5, Nome = "Queijo", TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Queijo, Valor = 1.5M }, 2));
 
             _lancheBLL.CalcularValor(lanche);
             _lancheBLL.CalcularPromocao(lanche);
 
-            Assert.False(lanche.Promocoes.Any(x => x.TipoPromocao == Model.Enumeradores.EnumTipoPromocao.Light), "Não deveria possuir uma promoção de Light!");
+            decimal valorEsperado = lanche.Ingredientes.Sum(s => s.Quantidade * s.Valor);
 
+            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
+
+            lanche.Ingredientes.ElementAt(4).Quantidade = 4;
+
+            _lancheBLL.CalcularValor(lanche);
+            _lancheBLL.CalcularPromocao(lanche);
+
+            valorEsperado = lanche.ValorIngredientes - lanche.Ingredientes.ElementAt(4).Valor;
+
+            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
+
+            lanche.Ingredientes.ElementAt(1).Quantidade = 4;
+
+            _lancheBLL.CalcularValor(lanche);
+            _lancheBLL.CalcularPromocao(lanche);
+
+            valorEsperado = lanche.ValorIngredientes - lanche.Ingredientes.ElementAt(1).Valor - lanche.Ingredientes.ElementAt(4).Valor;
+
+            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
+
+            decimal valorPrimeiroItem = lanche.Ingredientes.ElementAt(0).Valor * lanche.Ingredientes.ElementAt(0).Quantidade;
             lanche.Ingredientes.RemoveAt(0);
 
             _lancheBLL.CalcularValor(lanche);
             _lancheBLL.CalcularPromocao(lanche);
 
-            Assert.True(lanche.Promocoes.Any(x => x.TipoPromocao == Model.Enumeradores.EnumTipoPromocao.Light), "Deveria possuir uma promoção de Light!");
+            valorEsperado = (lanche.ValorIngredientes - (lanche.ValorIngredientes * 0.1M)) - lanche.Ingredientes.ElementAt(0).Valor - lanche.Ingredientes.ElementAt(3).Valor;
 
-            Assert.True(lanche.Promocoes.First(x => x.TipoPromocao == Model.Enumeradores.EnumTipoPromocao.Light).Valor == lanche.Valor * 0.1M * -1);
+            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
         }
     }
 }

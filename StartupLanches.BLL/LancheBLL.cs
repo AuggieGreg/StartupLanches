@@ -14,6 +14,11 @@ namespace StartupLanches.BLL
 
         }
 
+        public LancheMdl Obter(int id)
+        {
+            return dataBase.DbLanche.SingleOrDefault(x => x.Id == id);
+        }
+
         public List<LancheMdl> ListarLanches()
         {
             return dataBase.DbLanche.ToList();
@@ -72,6 +77,7 @@ namespace StartupLanches.BLL
                 .Where(x => x.Ingrediente.TipoIngrediente == Model.Enumeradores.EnumTipoIngrediente.Carne)
                 .GroupBy(g => new { g.IdIngrediente, g.Ingrediente.TipoIngrediente }))
             {
+                //Promoção muita carne
                 int carnesParaDescontar = group.Sum(s => s.Quantidade) / 3;
                 if (carnesParaDescontar > 0)
                 {
@@ -87,6 +93,7 @@ namespace StartupLanches.BLL
                 .Where(x => x.Ingrediente.TipoIngrediente == Model.Enumeradores.EnumTipoIngrediente.Queijo)
                 .GroupBy(g => new { g.IdIngrediente, g.Ingrediente.TipoIngrediente }))
             {
+                //Promoção muito queijo
                 int queijosParaDescontar = group.Sum(s => s.Quantidade) / 3;
                 if (queijosParaDescontar > 0)
                 {

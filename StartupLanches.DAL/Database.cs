@@ -24,6 +24,7 @@ namespace StartupLanches.DAL
             this.DbLanche = new List<LancheMdl>();
             this.DbLanche.Add(new LancheMdl()
             {
+                Id = 1,
                 Nome = "X-Bacon",
                 Ingredientes = new List<IngredienteLancheMdl>()
             {
@@ -34,6 +35,7 @@ namespace StartupLanches.DAL
             });
             this.DbLanche.Add(new LancheMdl()
             {
+                Id = 2,
                 Nome = "X-Burguer",
                 Ingredientes = new List<IngredienteLancheMdl>()
                 {
@@ -43,6 +45,7 @@ namespace StartupLanches.DAL
             });
             this.DbLanche.Add(new LancheMdl()
             {
+                Id = 3,
                 Nome = "X-Egg",
                 Ingredientes = new List<IngredienteLancheMdl>()
                 {
@@ -53,6 +56,7 @@ namespace StartupLanches.DAL
             });
             this.DbLanche.Add(new LancheMdl()
             {
+                Id = 4,
                 Nome = "X-Egg Bacon",
                 Ingredientes = new List<IngredienteLancheMdl>()
                 {

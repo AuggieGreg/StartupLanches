@@ -4,29 +4,43 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using StartupLanches.BLL;
+using StartupLanches.Model;
 
 namespace StartupLanches.Areas.Pedidos.Controllers
 {
     [Area("Pedidos")]
     public class PedidoController : Controller
     {
-        // GET: Pedido
         public ActionResult Index()
         {
             var bllLanche = new StartupLanches.BLL.LancheBLL();
             return View(bllLanche.ListarLanches());
         }
 
-        // GET: Pedido/Details/5
-        public ActionResult Details(int id)
+        public PartialViewResult TableMontagemLanche(int? idLanche)
         {
-            return View();
+            LanchePedidoMdl lanchePedido;
+            if (idLanche.HasValue)
+            {
+                var bllLanche = new LancheBLL();
+                var lanche = bllLanche.Obter(idLanche.Value);
+                lanchePedido = new LanchePedidoMdl(lanche);
+            }
+            else
+            {
+                lanchePedido = new LanchePedidoMdl();
+                lanchePedido.Ingredientes = new List<IngredienteLanchePedidoMdl>();
+            }
+            return PartialView("pvTableMontagemLanche", lanchePedido);
         }
 
-        // GET: Pedido/Create
-        public ActionResult Create()
+        public PartialViewResult TrMontagemLanche(int idIngrediente)
         {
-            return View();
+            var bllIngrediente = new IngredienteBLL();
+            var ingrediente = bllIngrediente.Obter(idIngrediente);
+            var ingredientePedido = new IngredienteLanchePedidoMdl(ingrediente, 1);
+            return PartialView("pvTrMontagemLanche", ingredientePedido);
         }
     }
 }

@@ -18,5 +18,13 @@ namespace StartupLanches.Model
         public int Quantidade { get; set; }
         public decimal Valor { get; set; }
         public IngredienteMdl Ingrediente { get; set; }
+
+        public decimal ValorTotal
+        {
+            get
+            {
+                return this.Quantidade * Valor;
+            }
+        }
     }
 }

@@ -14,6 +14,11 @@ namespace StartupLanches.BLL
 
         }
 
+        public IngredienteMdl Obter(int idIngrediente)
+        {
+            return dataBase.DbIngrediente.SingleOrDefault(x => x.Id == idIngrediente);
+        }
+
         public List<IngredienteMdl> ListarPorTermoETipo(string termo, EnumTipoIngrediente? tipoIngrediente = null, int? take = null)
         {
             var query = dataBase.DbIngrediente.Where(x => x.Nome.Contains(termo) && (tipoIngrediente == null || x.TipoIngrediente == tipoIngrediente));
