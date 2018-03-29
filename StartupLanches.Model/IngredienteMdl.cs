@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StartupLanches.Model.Enumeradores;
+using System;
 
 namespace StartupLanches.Model
 {
@@ -7,5 +8,6 @@ namespace StartupLanches.Model
         public int Id { get; set; }
         public string Nome { get; set; }
         public decimal Valor { get; set; }
+        public EnumTipoIngrediente TipoIngrediente { get; set; }
     }
 }

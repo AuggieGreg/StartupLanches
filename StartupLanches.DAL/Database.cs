@@ -8,63 +8,63 @@ namespace StartupLanches.DAL
     {
         public void PrepareDatabase()
         {
-            this.DbIngredientes = new List<IngredienteMdl>();
-            IngredienteMdl Alface = new IngredienteMdl() { Nome = "Alface", Valor = 0.4M };
-            IngredienteMdl Bacon = new IngredienteMdl() { Nome = "Bacon", Valor = 2.0M };
-            IngredienteMdl HamburguerCarne = new IngredienteMdl() { Nome = "Hambúrguer de carne", Valor = 3.0M };
-            IngredienteMdl Ovo = new IngredienteMdl() { Nome = "Ovo", Valor = 0.8M };
-            IngredienteMdl Queijo = new IngredienteMdl() { Nome = "Queijo", Valor = 1.5M };
+            this.DbIngrediente = new List<IngredienteMdl>();
+            IngredienteMdl Alface = new IngredienteMdl() { Id = 1, Nome = "Alface", Valor = 0.4M };
+            IngredienteMdl Bacon = new IngredienteMdl() { Id = 2, Nome = "Bacon", Valor = 2.0M };
+            IngredienteMdl HamburguerCarne = new IngredienteMdl() { Id = 3, Nome = "Hambúrguer de carne", Valor = 3.0M };
+            IngredienteMdl Ovo = new IngredienteMdl() { Id = 4, Nome = "Ovo", Valor = 0.8M };
+            IngredienteMdl Queijo = new IngredienteMdl() { Id = 5, Nome = "Queijo", Valor = 1.5M };
 
-            this.DbIngredientes.Add(Alface);
-            this.DbIngredientes.Add(Bacon);
-            this.DbIngredientes.Add(HamburguerCarne);
-            this.DbIngredientes.Add(Ovo);
-            this.DbIngredientes.Add(Queijo);
+            this.DbIngrediente.Add(Alface);
+            this.DbIngrediente.Add(Bacon);
+            this.DbIngrediente.Add(HamburguerCarne);
+            this.DbIngrediente.Add(Ovo);
+            this.DbIngrediente.Add(Queijo);
 
-            this.DbLanches = new List<LancheMdl>();
-            this.DbLanches.Add(new LancheMdl()
+            this.DbLanche = new List<LancheMdl>();
+            this.DbLanche.Add(new LancheMdl()
             {
                 Nome = "X-Bacon",
                 Ingredientes = new List<IngredienteLancheMdl>()
             {
-                new IngredienteLancheMdl()
-                { Ingrediente = Bacon, ,
-                HamburguerCarne,
-                Queijo
+                new IngredienteLancheMdl(Bacon),
+                new IngredienteLancheMdl(HamburguerCarne),
+                new IngredienteLancheMdl(Queijo)
             }
             });
-            this.DbLanches.Add(new LancheMdl()
+            this.DbLanche.Add(new LancheMdl()
             {
                 Nome = "X-Burguer",
                 Ingredientes = new List<IngredienteLancheMdl>()
                 {
-                    HamburguerCarne,
-                    Queijo,
+                    new IngredienteLancheMdl(HamburguerCarne),
+                    new IngredienteLancheMdl(Queijo),
                 }
             });
-            this.DbLanches.Add(new LancheMdl()
+            this.DbLanche.Add(new LancheMdl()
             {
                 Nome = "X-Egg",
                 Ingredientes = new List<IngredienteLancheMdl>()
                 {
-                    Ovo,
-                    HamburguerCarne,
-                    Queijo
+                    new IngredienteLancheMdl(Ovo),
+                    new IngredienteLancheMdl(HamburguerCarne),
+                    new IngredienteLancheMdl(Queijo)
                 }
             });
-            this.DbLanches.Add(new LancheMdl()
+            this.DbLanche.Add(new LancheMdl()
             {
                 Nome = "X-Egg Bacon",
                 Ingredientes = new List<IngredienteLancheMdl>()
                 {
-                    Ovo,
-                    Bacon,
-                    HamburguerCarne,
-                    Queijo
+                    new IngredienteLancheMdl(Ovo),
+                    new IngredienteLancheMdl(Bacon),
+                    new IngredienteLancheMdl(HamburguerCarne),
+                    new IngredienteLancheMdl(Queijo)
                 }
             });
         }
-        public List<LancheMdl> DbLanches { get; set; }
-        public List<IngredienteMdl> DbIngredientes { get; set; }
+        public List<PedidoMdl> DbPedido { get; set; }
+        public List<LancheMdl> DbLanche { get; set; }
+        public List<IngredienteMdl> DbIngrediente { get; set; }
     }
 }

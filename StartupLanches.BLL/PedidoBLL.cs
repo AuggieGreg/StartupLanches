@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StartupLanches.Model;
+using System;
 
 namespace StartupLanches.BLL
 {
@@ -7,6 +8,11 @@ namespace StartupLanches.BLL
         public PedidoBLL() : base()
         {
 
+        }
+
+        public void SalvarPedido(PedidoMdl Pedido)
+        {
+            dataBase.DbPedido.Add(Pedido);
         }
     }
 }
