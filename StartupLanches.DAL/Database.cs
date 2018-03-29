@@ -22,10 +22,47 @@ namespace StartupLanches.DAL
             this.DbIngredientes.Add(Queijo);
 
             this.DbLanches = new List<LancheMdl>();
-            this.DbLanches.Add(new LancheMdl() { Nome = "X-Bacon", Ingredientes = new List<IngredienteMdl>() { Bacon, HamburguerCarne, Queijo } });
-            this.DbLanches.Add(new LancheMdl() { Nome = "X-Burguer", Ingredientes = new List<IngredienteMdl>() { HamburguerCarne, Queijo, } });
-            this.DbLanches.Add(new LancheMdl() { Nome = "X-Egg", Ingredientes = new List<IngredienteMdl>() { Ovo, HamburguerCarne, Queijo } });
-            this.DbLanches.Add(new LancheMdl() { Nome = "X-Egg Bacon", Ingredientes = new List<IngredienteMdl>() { Ovo, Bacon, HamburguerCarne, Queijo } });
+            this.DbLanches.Add(new LancheMdl()
+            {
+                Nome = "X-Bacon",
+                Ingredientes = new List<IngredienteLancheMdl>()
+            {
+                new IngredienteLancheMdl()
+                { Ingrediente = Bacon, ,
+                HamburguerCarne,
+                Queijo
+            }
+            });
+            this.DbLanches.Add(new LancheMdl()
+            {
+                Nome = "X-Burguer",
+                Ingredientes = new List<IngredienteLancheMdl>()
+                {
+                    HamburguerCarne,
+                    Queijo,
+                }
+            });
+            this.DbLanches.Add(new LancheMdl()
+            {
+                Nome = "X-Egg",
+                Ingredientes = new List<IngredienteLancheMdl>()
+                {
+                    Ovo,
+                    HamburguerCarne,
+                    Queijo
+                }
+            });
+            this.DbLanches.Add(new LancheMdl()
+            {
+                Nome = "X-Egg Bacon",
+                Ingredientes = new List<IngredienteLancheMdl>()
+                {
+                    Ovo,
+                    Bacon,
+                    HamburguerCarne,
+                    Queijo
+                }
+            });
         }
         public List<LancheMdl> DbLanches { get; set; }
         public List<IngredienteMdl> DbIngredientes { get; set; }
