@@ -14,7 +14,6 @@
     $(document).ajaxError(function (e, xhr) {
         $("div.carregando:first").remove();
         try {
-            //eval("var ex = " + xhr.responseText + ";");
             var ex = JSON.parse(xhr.responseText);
             alert(ex.message + " - " + ex.type);
         }
@@ -32,46 +31,50 @@
 var StartupLanches =
     {
         Utils:
-            {
-                Confirm: function (titulo, mensagem, callback_nao, callback_sim) {
-                    var modal = $("#modal-message");
-                    modal.find(".modal-footer button").hide();
-                    modal.modal("show");
+        {
+            Confirm: function (titulo, mensagem, callback_nao, callback_sim) {
+                var modal = $("#modal-message");
+                modal.find(".modal-footer button").hide();
+                modal.modal("show");
 
-                    modal.find(".modal-title").html(titulo);
-                    modal.find("#modal-body-mensagem p").html(mensagem);
+                modal.find(".modal-title").html(titulo);
+                modal.find("#modal-body-mensagem p").html(mensagem);
 
-                    modal.find("#btNao").click(function () {
-                        if (callback_nao)
-                            callback_nao();
-                        modal.modal("hide");
-                    }).show();
+                modal.find("#btNao").click(function () {
+                    if (callback_nao)
+                        callback_nao();
+                    modal.modal("hide");
+                }).show();
 
-                    modal.find("#btSim").click(function () {
-                        if (callback_sim)
-                            callback_sim();
-                        modal.modal("hide");
-                    }).show();
+                modal.find("#btSim").click(function () {
+                    if (callback_sim)
+                        callback_sim();
+                    modal.modal("hide");
+                }).show();
 
-                    modal.find(".modal-footer button:first()").focus();
-                },
+                modal.find(".modal-footer button:first()").focus();
+            },
 
-                Ok: function (titulo, mensagem, callback_ok) {
-                    var modal = $("#modal-message");
-                    modal.find(".modal-footer button").hide();
-                    modal.modal("show");
+            Ok: function (titulo, mensagem, callback_ok) {
+                var modal = $("#modal-message");
+                modal.find(".modal-footer button").hide();
+                modal.modal("show");
 
-                    modal.find(".modal-title").html(titulo);
-                    modal.find("#modal-body-mensagem p").html(mensagem);
-                    
-                    modal.on('hidden.bs.modal', function () {
-                        if (callback_ok)
-                            callback_ok();
-                    });
+                modal.find(".modal-title").html(titulo);
+                modal.find("#modal-body-mensagem p").html(mensagem);
 
-                    modal.find(".modal-footer button:first()").focus();
-                }
+                modal.find("#btOk").show().click(function () {
+                    modal.modal("hide");
+                });
+
+                modal.on('hidden.bs.modal', function () {
+                    if (callback_ok)
+                        callback_ok();
+                });
+
+                modal.find(".modal-footer button:first()").focus();
             }
+        }
     };
 
 jQuery.fn.extend({

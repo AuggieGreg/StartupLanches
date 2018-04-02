@@ -12,7 +12,9 @@ namespace StartupLanches.Helpers
         {
             if (context == null) throw new ArgumentNullException(nameof(context));
 
-            if (!context.Metadata.IsComplexType && (context.Metadata.ModelType == typeof(decimal) || context.Metadata.ModelType == typeof(decimal?)))
+            if (!context.Metadata.IsComplexType 
+             && (context.Metadata.ModelType == typeof(decimal) 
+             ||  context.Metadata.ModelType == typeof(decimal?)))
             {
                 return new InvariantDecimalModelBinder(context.Metadata.ModelType);
             }
@@ -44,7 +46,11 @@ namespace StartupLanches.Helpers
                 decimal result;
 
                 // Use invariant culture
-                if (decimal.TryParse(valueAsString, NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign, CultureInfo.CurrentCulture, out result))
+                if (decimal.TryParse(valueAsString, 
+                    NumberStyles.AllowDecimalPoint 
+                  | NumberStyles.AllowLeadingSign, 
+                    CultureInfo.CurrentCulture, 
+                    out result))
                 {
                     bindingContext.Result = ModelBindingResult.Success(result);
                     return Task.CompletedTask;

@@ -67,7 +67,6 @@
     </environment>
     <script src="~/js/Utils.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
-
     <div class="modal fade" id="modal-message" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -80,9 +79,15 @@
                     <p></p>
                 </div>
                 <div class="modal-footer">
-                    <button id="btNao" style="display: none;" title="Não" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-"></span> Não</button>
-                    <button id="btSim" style="display: none;" title="Sim" type="button" class="btn btn-success"><span class="glyphicon glyphicon-"></span> Sim</button>
-                    <button id="btOk" style="display: none;" title="Sim" type="button" class="btn btn-info"><span class="glyphicon glyphicon-"></span> Ok</button>
+                    <button id="btNao" style="display: none;" title="Não" type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-"></span> Não
+                    </button>
+                    <button id="btSim" style="display: none;" title="Sim" type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-"></span> Sim
+                    </button>
+                    <button id="btOk" style="display: none;" title="Sim" type="button" class="btn btn-info">
+                        <span class="glyphicon glyphicon-check"></span> Ok
+                    </button>
                 </div>
             </div>
         </div>
