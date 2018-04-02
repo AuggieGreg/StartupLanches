@@ -9,11 +9,11 @@ namespace StartupLanches.DAL
         public void PrepareDatabase()
         {
             this.DbIngrediente = new List<IngredienteMdl>();
-            IngredienteMdl Alface = new IngredienteMdl() { Id = 1, Nome = "Alface", Valor = 0.4M };
-            IngredienteMdl Bacon = new IngredienteMdl() { Id = 2, Nome = "Bacon", Valor = 2.0M };
-            IngredienteMdl HamburguerCarne = new IngredienteMdl() { Id = 3, Nome = "Hambúrguer de carne", Valor = 3.0M };
-            IngredienteMdl Ovo = new IngredienteMdl() { Id = 4, Nome = "Ovo", Valor = 0.8M };
-            IngredienteMdl Queijo = new IngredienteMdl() { Id = 5, Nome = "Queijo", Valor = 1.5M };
+            IngredienteMdl Alface = new IngredienteMdl() { Id = 1, Nome = "Alface", Valor = 0.4M, TipoIngrediente =Model.Enumeradores.EnumTipoIngrediente.Vegetal };
+            IngredienteMdl Bacon = new IngredienteMdl() { Id = 2, Nome = "Bacon", Valor = 2.0M, TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Carne };
+            IngredienteMdl HamburguerCarne = new IngredienteMdl() { Id = 3, Nome = "Hambúrguer de carne", Valor = 3.0M, TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Carne };
+            IngredienteMdl Ovo = new IngredienteMdl() { Id = 4, Nome = "Ovo", Valor = 0.8M, TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Outros };
+            IngredienteMdl Queijo = new IngredienteMdl() { Id = 5, Nome = "Queijo", Valor = 1.5M, TipoIngrediente = Model.Enumeradores.EnumTipoIngrediente.Queijo };
 
             this.DbIngrediente.Add(Alface);
             this.DbIngrediente.Add(Bacon);
@@ -66,6 +66,8 @@ namespace StartupLanches.DAL
                     new IngredienteLancheMdl(Queijo)
                 }
             });
+
+            DbPedido = new List<PedidoMdl>();
         }
         public List<PedidoMdl> DbPedido { get; set; }
         public List<LancheMdl> DbLanche { get; set; }

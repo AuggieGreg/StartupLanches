@@ -1,20 +1,28 @@
 ﻿@using StartupLanches.Model;
-@model List<LancheMdl>
-
+@model List<LanchePedidoMdl>
 @{
-    ViewData["Title"] = "Pedidos";
-}
+    ViewData["Title"] = "Fazer Pedido";
 
+    List<IngredienteMdl> Ingredientes = ViewBag.Ingredientes;
+}
 @section Scripts
     {
     <script type="text/javascript">
         var Url = new Object();
         Url.TableMontagemLanche = "@Url.Action("TableMontagemLanche")";
+        Url.TrMontagemLanche = "@Url.Action("TrMontagemLanche")";
+        Url.CalcularPromocoes = "@Url.Action("CalcularPromocoes")";
+        Url.AdicionarLanchePedido = "@Url.Action("AdicionarLanchePedido")";
+        Url.ConfirmarPedido = "@Url.Action("ConfirmarPedido")";
     </script>
     <script src="~/js/Areas/Pedidos/Pedido/Index.js" asp-append-version="true"></script>
 }
 
-<table id="table-lanches" class="table">
+<div class="modal-footer">
+    <button id="btAbrirPedido" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalPedido"><span class="glyphicon glyphicon-edit"></span> Abrir Pedido</button>
+    <button id="btConfirmarPedido" title="Adicionar Lanche" type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalPedido"><span class="glyphicon glyphicon-check"></span> Confirmar</button>
+</div>
+<table id="table-cardapio-lanches" class="table">
     <thead>
         <tr>
             <th colspan="3">Lanches do Cardápio</th>
@@ -34,12 +42,163 @@
             }
         }
         <tr data-id="null">
-            <td>Personalziado</td>
+            <td>Personalizado</td>
             <td>Escolha do Cliente</td>
             <td>-</td>
+            @Html.Hidden("NomeLanche", "Personalizado")
         </tr>
     </tbody>
 </table>
 <div id="content-montagem">
-
+    <table id="table-montagem" class="table" style="display: none;">
+        <colgroup>
+            <col style="width: 0.5%" />
+            <col style="width: 39%" />
+            <col style="width: 20%" />
+            <col style="width: 20%" />
+            <col style="width: 20%" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th colspan="5" scope="col">Personalização</th>
+            </tr>
+            <tr>
+                <th colspan="3">
+                    <label>Adicionar Ingrediente: </label>
+                    <select id="selectIngrediente" type="text" class="form-control">
+                        @if (Ingredientes != null)
+                        {
+                            <option></option>
+                            foreach (var ingrediente in Ingredientes)
+                            {
+                                <option value="@ingrediente.Id">@ingrediente.Nome</option>
+                            }
+                        }
+                    </select>
+                </th>
+                <th>
+                    @*<input id="txtQtdIngrediente" type="number" min="1" max="9" value="" class="form-control" style="width: 70px; display: inline-block;" />*@
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="txtQtdIngrediente">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        </span>
+                        <input id="txtQtdIngrediente" name="txtQtdIngrediente" type="text" class="form-control input-number" value="1" min="1" max="9" style="width: 40px; text-align: right;">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="txtQtdIngrediente">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </th>
+                <th>
+                    <button id="btnAdicionarIngrediente" title="Adicionar Ingrediente" type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span> Adicionar
+                    </button>
+                </th>
+            </tr>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Ingrediente</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Preço</th>
+            </tr>
+        </thead>
+        <tbody id="tboMontagem"></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    @Html.Hidden("NomeLanche")
+                </td>
+                <th class="align-middle">Quantidade:</th>
+                <th id="th-quantidade-lanche">
+                    @*<input id="txtQtdLanche" type="number" min="1" max="9" value="1" class="form-control" style="width: 70px; display: inline-block;" />*@
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="Quantidade">
+                                <span class="glyphicon glyphicon-minus"></span>
+                            </button>
+                        </span>
+                        <input id="txtQtdLanche" name="Quantidade" type="text" class="form-control input-number" value="1" min="1" max="9" style="width: 40px; text-align: right;">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="Quantidade">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+                <th>Total:</th>
+                <th id="th-total-lanche"></th>
+            </tr>
+            <tr>
+                <td colspan="5" align="right">
+                    <button id="btAdicionarLanche" title="Adicionar Lanche" type="button" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Adicionar ao Pedido</button>
+                </td>
+            </tr>
+            @*<tr>
+                    <td colspan="5" align="right">
+                        <button id="btAbrirPedido" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalPedido"><span class="glyphicon glyphicon-edit"></span> Abrir Pedido</button>
+                        <button id="btConfirmarPedido" title="Adicionar Lanche" type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalPedido"><span class="glyphicon glyphicon-check"></span> Confirmar</button>
+                    </td>
+                </tr>*@
+        </tfoot>
+    </table>
+</div>
+<div id="content-pedido" class="container">
+    <div class="modal fade" id="modalPedido" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lanches do Pedido</h4>
+                </div>
+                <form id="formPedido" action="javascript:void(0)" method="post" data-toggle="validator" role="form">
+                    <div id="modal-body-pedidos" class="modal-body">
+                        <table id="table-cardapio-lanches" class="table">
+                            <colgroup>
+                                <col style="width: 1%" />
+                                <col style="width: 24%" />
+                                <col style="width: 25%" />
+                                <col style="width: 25%" />
+                                <col style="width: 25%" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Lanche</th>
+                                    <th>Valor Unitário</th>
+                                    <th>Quantidade</th>
+                                    <th>Valor Final</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tboPedido"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <th>Total:</th>
+                                    <th id="th-total-pedido"></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div class="form-group finalizarPedido">
+                            <label for="NomeChamar">Nome do Cliente</label>
+                            <input id="NomeChamar" name="NomeCliente" type="text" class="form-control input-number" data-error="Por favor, informe o nome do cliente para que ele possa ser chamado." required />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="btLimparPedido" title="Limpar Pedido" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-"></span> Limpar Pedido</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button id="btFinalizarPedido" title="Finalizar Pedido" type="submit" class="btn btn-success btn-lg finalizarPedido"><span class="glyphicon glyphicon-check"></span> Finalizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

@@ -14,8 +14,23 @@ namespace StartupLanches.Areas.Pedidos.Controllers
     {
         public ActionResult Index()
         {
+            var bllIngrediente = new IngredienteBLL();
+            ViewBag.Ingredientes = bllIngrediente.SelecionarTodos();
             var bllLanche = new StartupLanches.BLL.LancheBLL();
-            return View(bllLanche.ListarLanches());
+
+            var model = bllLanche.ListarLanches().Select(s => new LanchePedidoMdl(s)).ToList();
+            foreach (var lanche in model)
+            {
+                bllLanche.CalcularValor(lanche);
+                bllLanche.CalcularPromocao(lanche);
+            }
+            return View(model);
+        }
+
+        public ActionResult Pedidos()
+        {
+            var pedidoBLL = new PedidoBLL();
+            return View(pedidoBLL.ListarTodos());
         }
 
         public PartialViewResult TableMontagemLanche(int? idLanche)
@@ -32,15 +47,38 @@ namespace StartupLanches.Areas.Pedidos.Controllers
                 lanchePedido = new LanchePedidoMdl();
                 lanchePedido.Ingredientes = new List<IngredienteLanchePedidoMdl>();
             }
-            return PartialView("pvTableMontagemLanche", lanchePedido);
+            return PartialView("pvTbodyTrMontagemLanche", lanchePedido);
         }
 
-        public PartialViewResult TrMontagemLanche(int idIngrediente)
+        public PartialViewResult CalcularPromocoes(LanchePedidoMdl lanchePedido)
+        {
+            var lancheBLL = new LancheBLL();
+            lancheBLL.CalcularValor(lanchePedido);
+            lancheBLL.CalcularPromocao(lanchePedido);
+            return PartialView("pvTbodyTrMontagemLanche", lanchePedido);
+        }
+
+        public PartialViewResult TrMontagemLanche(int idIngrediente, int quantidade)
         {
             var bllIngrediente = new IngredienteBLL();
             var ingrediente = bllIngrediente.Obter(idIngrediente);
-            var ingredientePedido = new IngredienteLanchePedidoMdl(ingrediente, 1);
+            var ingredientePedido = new IngredienteLanchePedidoMdl(ingrediente, quantidade);
             return PartialView("pvTrMontagemLanche", ingredientePedido);
+        }
+
+        public PartialViewResult AdicionarLanchePedido(LanchePedidoMdl lanchePedido)
+        {
+            var lancheBLL = new LancheBLL();
+            lancheBLL.CalcularValor(lanchePedido);
+            lancheBLL.CalcularPromocao(lanchePedido);
+            return PartialView("pvTrLanchePedido", lanchePedido);
+        }
+
+        [HttpPost]
+        public JsonResult ConfirmarPedido(PedidoMdl pedido)
+        {
+            var pedidoBLL = new PedidoBLL();
+            return Json(new { sucesso = true, numeroPedido = pedidoBLL.SalvarPedido(pedido) });
         }
     }
 }

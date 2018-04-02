@@ -11,7 +11,7 @@ namespace StartupLanches.Model
         public LanchePedidoMdl(LancheMdl lanche)
         {
             this.IdLanche = lanche.Id;
-            this.Nome = lanche.Nome;
+            this.NomeLanche = lanche.Nome;
             this.Valor = lanche.Valor;
             if (lanche.Ingredientes != null)
                 this.Ingredientes = lanche.Ingredientes.Select(s => new IngredienteLanchePedidoMdl(s.Ingrediente, 1)).ToList();
@@ -19,8 +19,9 @@ namespace StartupLanches.Model
 
         public int Id { get; set; }
         public int? IdLanche { get; set; }
-        public string Nome { get; set; }
+        public string NomeLanche { get; set; }
         public List<IngredienteLanchePedidoMdl> Ingredientes { get; set; }
+        public int Quantidade { get; set; }
         public decimal Valor { get; set; }
         public List<PromocaoLancheMdl> Promocoes { get; set; }
         public decimal ValorIngredientes
@@ -30,11 +31,19 @@ namespace StartupLanches.Model
                 return Ingredientes != null ? Ingredientes.Sum(s => s.Quantidade * s.Valor) : 0;
             }
         }
-        public decimal ValorFinal
+        public decimal ValorPromocional
         {
             get
             {
                 return ValorIngredientes + (Promocoes != null ? Promocoes.Sum(s => s.Valor) : 0);
+            }
+        }
+
+        public decimal ValorFinal
+        {
+            get
+            {
+                return ValorPromocional * Quantidade;
             }
         }
     }

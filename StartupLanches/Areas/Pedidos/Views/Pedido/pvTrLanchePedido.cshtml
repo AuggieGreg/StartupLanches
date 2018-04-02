@@ -1,0 +1,31 @@
+﻿@using StartupLanches.Model;
+@{
+    Layout = null;
+}
+@model LanchePedidoMdl
+
+<tr data-id="@Model.Id" valor="@Model.ValorFinal">
+    <td>
+        <button title="Remover" type="button" class="btn btn-danger btnRemover"><span class="glyphicon glyphicon-remove"></span></button>
+    </td>
+    <td class="align-middle">@Model.NomeLanche</td>
+    <td class="align-middle">@Model.ValorPromocional.ToString("c")</td>
+    <td class="align-middle">@Model.Quantidade</td>
+    <td class="align-middle">@Model.ValorFinal.ToString("c")</td>
+    @Html.Hidden("Lanches.IdLanche", Model.IdLanche)
+    @Html.Hidden("Lanches.NomeLanche", Model.NomeLanche)
+    @Html.Hidden("Lanches.Quantidade", Model.Quantidade)
+    @Html.Hidden("Lanches.Valor", Model.Valor)
+    @for (int i = 0; i < Model.Ingredientes.Count; i++)
+    {
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Id", i), Model.Ingredientes[i].Id)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].IdIngrediente", i), Model.Ingredientes[i].IdIngrediente)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Nome", i), Model.Ingredientes[i].Nome)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Quantidade", i), Model.Ingredientes[i].Quantidade)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Valor", i), Model.Ingredientes[i].Valor)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Ingrediente.Id", i), Model.Ingredientes[i].Ingrediente.Id)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Ingrediente.Nome", i), Model.Ingredientes[i].Ingrediente.Nome)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Ingrediente.TipoIngrediente", i), Model.Ingredientes[i].Ingrediente.TipoIngrediente)
+        @Html.Hidden(string.Format("Lanches.Ingredientes[{0}].Ingrediente.Valor", i), Model.Ingredientes[i].Ingrediente.Valor)
+    }
+</tr>

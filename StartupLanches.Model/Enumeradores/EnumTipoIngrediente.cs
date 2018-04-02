@@ -1,11 +1,12 @@
 ﻿namespace StartupLanches.Model.Enumeradores
 {
-    public enum EnumTipoIngrediente
+    public enum EnumTipoIngrediente : short
     {
-        Carne,
-        Queijo,
-        Vegetal,
-        Tempero,
-        Outros,
+        Nenhum = 0,
+        Carne = 1,
+        Queijo = 2,
+        Vegetal = 3,
+        Tempero = 4,
+        Outros = 9,
     }
 }

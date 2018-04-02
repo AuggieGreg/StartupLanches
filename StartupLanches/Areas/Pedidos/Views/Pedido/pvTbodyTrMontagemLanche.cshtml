@@ -1,0 +1,29 @@
+﻿@using StartupLanches.Model;
+@model LanchePedidoMdl
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    @Html.HiddenFor(model => model.IdLanche)
+
+    foreach (var lanche in Model.Ingredientes)
+    {
+        @Html.Partial("pvTrMontagemLanche", lanche)
+    }
+
+    @if (Model.Promocoes != null && Model.Promocoes.Any())
+    {
+        <tr>
+            <th colspan="5">Promoções Ativas</th>
+        </tr>
+        foreach (var promocao in Model.Promocoes)
+        {
+            <tr valor="@promocao.Valor">
+                <th>@promocao.TipoPromocao</th>
+                <td colspan="3">@promocao.Nome</td>
+                <td style="color: green;">@promocao.Valor.ToString("c")</td>
+            </tr>
+        }
+    }
+}

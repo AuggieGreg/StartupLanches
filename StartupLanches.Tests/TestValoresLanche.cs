@@ -118,7 +118,7 @@ namespace StartupLanches.Tests
 
             decimal valorEsperado = lanche.Ingredientes.Sum(s => s.Quantidade * s.Valor);
 
-            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
+            Assert.True(lanche.ValorPromocional == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
 
             lanche.Ingredientes.ElementAt(4).Quantidade = 4;
 
@@ -127,7 +127,7 @@ namespace StartupLanches.Tests
 
             valorEsperado = lanche.ValorIngredientes - lanche.Ingredientes.ElementAt(4).Valor;
 
-            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
+            Assert.True(lanche.ValorPromocional == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
 
             lanche.Ingredientes.ElementAt(1).Quantidade = 4;
 
@@ -136,7 +136,7 @@ namespace StartupLanches.Tests
 
             valorEsperado = lanche.ValorIngredientes - lanche.Ingredientes.ElementAt(1).Valor - lanche.Ingredientes.ElementAt(4).Valor;
 
-            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
+            Assert.True(lanche.ValorPromocional == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
 
             decimal valorPrimeiroItem = lanche.Ingredientes.ElementAt(0).Valor * lanche.Ingredientes.ElementAt(0).Quantidade;
             lanche.Ingredientes.RemoveAt(0);
@@ -146,7 +146,7 @@ namespace StartupLanches.Tests
 
             valorEsperado = (lanche.ValorIngredientes - (lanche.ValorIngredientes * 0.1M)) - lanche.Ingredientes.ElementAt(0).Valor - lanche.Ingredientes.ElementAt(3).Valor;
 
-            Assert.True(lanche.ValorFinal == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
+            Assert.True(lanche.ValorPromocional == valorEsperado, $"Lanche deveria ter um valor {valorEsperado}");
         }
     }
 }

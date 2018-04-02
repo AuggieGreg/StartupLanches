@@ -4,6 +4,8 @@ namespace StartupLanches.Model
 {
     public class IngredienteLanchePedidoMdl
     {
+        public IngredienteLanchePedidoMdl()
+        { }
         public IngredienteLanchePedidoMdl(IngredienteMdl Ingrediente, int quantidade)
         {
             this.Ingrediente = Ingrediente;

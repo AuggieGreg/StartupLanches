@@ -1,12 +1,14 @@
 ﻿@using StartupLanches.Model;
-@model LancheMdl
+@model LanchePedidoMdl
 
 @{
     Layout = null;
 }
 
-<tr data-id="@Model.Id">
-    <td>@Model.Nome</td>
+<tr data-id="@Model.IdLanche">
+    <td>@Model.NomeLanche</td>
     <td>@string.Join(',', Model.Ingredientes.Select(s => s.Nome).ToList())</td>
-    <td>@Model.Valor.ToString()</td>
+    <td>@Model.Valor.ToString("c")</td>
+    @Html.Hidden("NomeLanche", Model.NomeLanche)
+    @Html.Hidden("IdLanche", Model.IdLanche)
 </tr>

@@ -1,18 +1,37 @@
 ﻿@using StartupLanches.Model;
-
 @{
     Layout = null;
 }
-
 @model IngredienteLanchePedidoMdl
-<tr data-id="@Model.Id">
-    <td>@Model.Nome</td>
-    <td>@Model.Valor.ToString("c")</td>
-    <td><input class="form-control" min="1" max="9" name="Quantidade" type="number" placeholder="Quantidade" value="@Model.Quantidade" style="width: 70px;" /></td>
-    <td class="td-sub-total">@Model.ValorTotal.ToString("c")</td>
+<tr data-id="@Model.Id" valor="@Model.ValorTotal">
+    <td>
+        <button title="Remover" type="button" class="btn btn-danger btnRemover"><span class="glyphicon glyphicon-remove"></span></button>
+    </td>
+    <td class="align-middle">@Model.Nome</td>
+    <td class="align-middle">@Model.Valor.ToString("c")</td>
+    <td>
+        @*<input id="Quantidade" class="form-control" min="1" max="9" name="Quantidade" type="number" placeholder="Quantidade" value="@Model.Quantidade" style="width: 70px;" />*@
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-danger btn-number" data-type="minus" data-field="Quantidade">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+            </span>
+            <input id="Quantidade" type="text" name="Quantidade" class="form-control input-number" value="@Model.Quantidade" min="1" max="9" style="width: 40px; text-align: right;" >
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="Quantidade">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+            </span>
+        </div>
+    </td>
+    <td class="td-sub-total align-middle">@Model.ValorTotal.ToString("c")</td>
     @Html.HiddenFor(model => model.Id)
     @Html.HiddenFor(model => model.Valor)
+    @Html.HiddenFor(model => model.Nome)
     @Html.HiddenFor(model => model.IdIngrediente)
     @Html.HiddenFor(model => model.Ingrediente.Id)
+    @Html.HiddenFor(model => model.Ingrediente.Nome)
+    @Html.HiddenFor(model => model.Ingrediente.Valor)
     @Html.HiddenFor(model => model.Ingrediente.TipoIngrediente)
 </tr>

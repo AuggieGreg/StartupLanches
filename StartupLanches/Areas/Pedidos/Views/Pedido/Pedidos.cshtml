@@ -1,0 +1,48 @@
+﻿@using StartupLanches.Model;
+@model List<PedidoMdl>
+@{
+    ViewData["Title"] = "Pedidos Realizados";
+
+    List<IngredienteMdl> Ingredientes = ViewBag.Ingredientes;
+}
+
+<table id="table-pedidos" class="table">
+    <thead>
+        <tr>
+            <th colspan="3">Laches Pedidos</th>
+        </tr>
+        <tr>
+            <th scope="col">Número do Pedido</th>
+            <th scope="col">Nome do Cliente</th>
+            <th scope="col">Lanches</th>
+            <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var pedido in Model)
+            {
+                <tr>
+                    <th class="align-middle">@pedido.Numero</th>
+                    <th class="align-middle">@pedido.NomeCliente</th>
+                    <td>
+                        <table id="table-pedidos" class="table">
+                            @foreach (var lanche in pedido.Lanches)
+                            {
+                                <tr>
+                                    <td>@lanche.NomeLanche</td>
+                                    <td>@lanche.ValorPromocional.ToString("c")</td>
+                                    <td>x</td>
+                                    <td>@lanche.Quantidade</td>
+                                    <td>@lanche.ValorFinal.ToString("c")</td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                    <th class="align-middle">@pedido.ValorTotal.ToString("c")</th>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
