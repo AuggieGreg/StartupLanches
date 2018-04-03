@@ -2,10 +2,10 @@
 <Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.0</ProjectVersion>
-    <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>de179d72-e823-4e62-b6fd-93fdbdf28e80</ProjectGuid>
-    <DockerLaunchBrowser>True</DockerLaunchBrowser>
-    <DockerServiceUrl>http://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerTargetOS>Windows</DockerTargetOS>
+    <ProjectGuid>fcbde253-c079-4f41-960f-5d20e3c748aa</ProjectGuid>
+    <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+    <DockerServiceUrl>http://{ServiceIPAddress}</DockerServiceUrl>
     <DockerServiceName>startuplanches</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
@@ -14,6 +14,5 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
-    <None Include="docker-compose.ci.build.yml" />
   </ItemGroup>
 </Project>

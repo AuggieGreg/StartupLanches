@@ -71,23 +71,26 @@ $(function () {
     });
 
     $("#formPedido").submit(function (e) {
-        if ($(this).find("#tboPedido tr[valor]").size() > 0) {
-            preparar_grid_pedido_lanche();
-            $.post(Url.ConfirmarPedido, $("#formPedido").serialize(), function (res) {
-                if (res && res.sucesso === true) {
-                    StartupLanches.Utils.Ok("Pedido cadastrado!", "O número do pedido é " + res.numeroPedido + ".", function () {
-                        location.reload();
-                    });
-                }
-            });
+        if ($("#formPedido").is(":valid")) {
+            if ($(this).find("#tboPedido tr[valor]").size() > 0) {
+                preparar_grid_pedido_lanche();
+                $.post(Url.ConfirmarPedido, $("#formPedido").serialize(), function (res) {
+                    if (res && res.sucesso === true) {
+                        StartupLanches.Utils.Ok("Pedido cadastrado!", "O número do pedido é " + res.numeroPedido + ".", function () {
+                            location.reload();
+                        });
+                    }
+                });
+            }
+            else {
+                StartupLanches.Utils.Ok("Nenhum lanche no pedido", "Para concluir o pedido é necessário ao menos um lanche.");
+            }
+            e.preventDefault();
         }
-        else {
-            StartupLanches.Utils.Ok("Nenhum lanche no pedido", "Para concluir o pedido é necessário ao menos um lanche.");
-        }
-        e.preventDefault();
         return false;
     });
 
+    calcular_pedido();
 });
 
 var bind_tr_montagem_events = function (tr) {

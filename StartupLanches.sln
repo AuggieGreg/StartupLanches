@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartupLanches", "StartupLanches\StartupLanches.csproj", "{FAD274EC-0712-40E4-A1C9-3A3370F060B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartupLanches", "StartupLanches\StartupLanches.csproj", "{FAD274EC-0712-40E4-A1C9-3A3370F060B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartupLanches.Model", "StartupLanches.Model\StartupLanches.Model.csproj", "{C653D558-43B2-4FAF-B181-36D34D485562}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartupLanches.Model", "StartupLanches.Model\StartupLanches.Model.csproj", "{C653D558-43B2-4FAF-B181-36D34D485562}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartupLanches.BLL", "StartupLanches.BLL\StartupLanches.BLL.csproj", "{EDD5DC15-2F90-4C1F-AE47-D8582F1E7CA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartupLanches.BLL", "StartupLanches.BLL\StartupLanches.BLL.csproj", "{EDD5DC15-2F90-4C1F-AE47-D8582F1E7CA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartupLanches.DAL", "StartupLanches.DAL\StartupLanches.DAL.csproj", "{80977A8C-4FD6-49E9-9623-655BE48371CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartupLanches.DAL", "StartupLanches.DAL\StartupLanches.DAL.csproj", "{80977A8C-4FD6-49E9-9623-655BE48371CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartupLanches.Tests", "StartupLanches.Tests\StartupLanches.Tests.csproj", "{0D05A339-FE79-4022-9FE6-8D0FDC5B77E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartupLanches.Tests", "StartupLanches.Tests\StartupLanches.Tests.csproj", "{0D05A339-FE79-4022-9FE6-8D0FDC5B77E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
